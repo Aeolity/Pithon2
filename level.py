@@ -15,8 +15,10 @@ class Level:
         self.current_x = 0
 
         # enemy
-        snail = pygame.image.load('graphics/snail/snail1.png').convert_alpha()
-        snail_rect = snail.get_rect(center = (520,80))
+        self.snail = pygame.image.load('graphics/snail/snail1.png').convert_alpha()
+        self.snail_rect = self.snail.get_rect(center = (520,80))
+
+        self.game_active = True
 
         # dust
         self.dust_sprite = pygame.sprite.GroupSingle()
@@ -118,6 +120,12 @@ class Level:
         if player.on_ceiling and player.direction.y > 0.1:
             player.on_ceiling = False
 
+    def detect_collision(self):
+        player = self.player.sprite
+        if pygame.Rect.colliderect(self.snail_rect, player.rect) == True:
+            self.game_active = False
+            
+
     def run(self):
         # dust particles
         self.dust_sprite.update(self.world_shift)
@@ -129,4 +137,5 @@ class Level:
         self.get_player_on_ground()
         self.vertical_movement_collision()
         self.create_landing_dust()
+        self.detect_collision()
         self.player.draw(self.display_surface)
