@@ -14,6 +14,10 @@ class Level:
         self.world_shift = 0
         self.current_x = 0
 
+        # enemy
+        snail = pygame.image.load('graphics/snail/snail1.png').convert_alpha()
+        snail_rect = snail.get_rect(center = (520,80))
+
         # dust
         self.dust_sprite = pygame.sprite.GroupSingle()
         self.player_on_ground = False
